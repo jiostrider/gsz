@@ -16,8 +16,8 @@ const makerProjects = [
     label: '图二',
     description: '融合电子时钟与温度显示的多功能装置，采用七段数码管显示，实时呈现时间与环境温度，兼具实用性与观赏性。',
     tech: ['七段数码管', '实时温度传感', '时钟模块'],
-    image: 'clock-thermo.jpg',
-    isGif: false,
+    image: 'clock-thermo.gif',
+    isGif: true,
   },
 ];
 
