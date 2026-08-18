@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import Hls from 'hls.js';
 
-export default function BackgroundVideo({ muted = true }) {
+export default function BackgroundVideo({ muted = true, audioRef: externalAudioRef }) {
   const videoRef = useRef(null);
   const audioRef = useRef(null);
   const src = "https://stream.mux.com/kimF2ha9zLrX64H00UgLGPflCzNtl1T0215MlAmeOztv8.m3u8";
@@ -11,9 +11,7 @@ export default function BackgroundVideo({ muted = true }) {
     if (!video) return;
 
     if (Hls.isSupported()) {
-      const hls = new Hls({
-        enableWorker: true,
-      });
+      const hls = new Hls({ enableWorker: true });
       hls.loadSource(src);
       hls.attachMedia(video);
       hls.on(Hls.Events.MANIFEST_PARSED, () => {
@@ -31,10 +29,15 @@ export default function BackgroundVideo({ muted = true }) {
   useEffect(() => {
     const audio = audioRef.current;
     if (!audio) return;
+
     if (muted) {
       audio.pause();
     } else {
-      audio.play().catch(() => {});
+      audio.volume = 1;
+      const playPromise = audio.play();
+      if (playPromise !== undefined) {
+        playPromise.catch(() => {});
+      }
     }
   }, [muted]);
 
@@ -49,7 +52,10 @@ export default function BackgroundVideo({ muted = true }) {
         className="w-full h-full object-cover opacity-80"
       ></video>
       <audio
-        ref={audioRef}
+        ref={(el) => {
+          audioRef.current = el;
+          if (externalAudioRef) externalAudioRef.current = el;
+        }}
         src={new URL('../assets/audio/bgm.mp3', import.meta.url).href}
         loop
         preload="auto"

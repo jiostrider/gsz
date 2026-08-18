@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ExternalLink } from 'lucide-react';
 
@@ -32,9 +32,16 @@ const projects = [
 function ProjectCard({ project }) {
   const [isHovered, setIsHovered] = useState(false);
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+  const [isTouched, setIsTouched] = useState(false);
+  const [isTouchDevice, setIsTouchDevice] = useState(false);
   const cardRef = useRef(null);
 
+  useEffect(() => {
+    setIsTouchDevice('ontouchstart' in window || navigator.maxTouchPoints > 0);
+  }, []);
+
   const handleMouseEnter = (e) => {
+    if (isTouchDevice) return;
     const rect = cardRef.current.getBoundingClientRect();
     setMousePos({
       x: e.clientX - rect.left,
@@ -44,6 +51,7 @@ function ProjectCard({ project }) {
   };
 
   const handleMouseMove = (e) => {
+    if (isTouchDevice) return;
     if (!isHovered) return;
     const rect = cardRef.current.getBoundingClientRect();
     setMousePos({
@@ -52,11 +60,24 @@ function ProjectCard({ project }) {
     });
   };
 
-  const handleMouseLeave = () => setIsHovered(false);
+  const handleMouseLeave = () => {
+    if (isTouchDevice) return;
+    setIsHovered(false);
+  };
 
   const handleClick = () => {
+    if (isTouchDevice) {
+      if (!isTouched) {
+        setIsTouched(true);
+        const rect = cardRef.current.getBoundingClientRect();
+        setMousePos({ x: rect.width / 2, y: rect.height / 2 });
+        return;
+      }
+    }
     window.open(project.link, '_blank', 'noopener noreferrer');
   };
+
+  const showImage = isTouchDevice ? isTouched : isHovered;
 
   return (
     <div
@@ -65,20 +86,20 @@ function ProjectCard({ project }) {
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
       onClick={handleClick}
-      className="liquid-glass rounded-2xl cursor-pointer h-56 relative overflow-hidden group"
+      className="liquid-glass rounded-2xl cursor-pointer h-64 relative overflow-hidden group"
     >
-      {/* White gradient overlay - quickly covers on hover */}
+      {/* White gradient overlay */}
       <div
         className="absolute inset-0 z-10 transition-all duration-300 pointer-events-none"
         style={{
-          opacity: isHovered ? 1 : 0,
+          opacity: showImage ? 1 : 0,
           background: 'radial-gradient(circle at center, rgba(255,255,255,0.92) 0%, rgba(255,255,255,0.75) 45%, rgba(255,255,255,0.35) 100%)',
         }}
       />
 
-      {/* Hover image pop - from mouse position, rotates and expands to fill card */}
+      {/* Image pop */}
       <AnimatePresence>
-        {isHovered && (
+        {showImage && (
           <motion.div
             initial={{ scale: 0, rotate: -90, opacity: 0 }}
             animate={{ scale: 1, rotate: 0, opacity: 1 }}
@@ -86,7 +107,7 @@ function ProjectCard({ project }) {
             transition={{ type: 'spring', stiffness: 120, damping: 14, mass: 0.8 }}
             className="absolute inset-0 z-[15] pointer-events-none"
             style={{
-              transformOrigin: `${mousePos.x}px ${mousePos.y}px`,
+              transformOrigin: isTouchDevice ? '50% 50%' : `${mousePos.x}px ${mousePos.y}px`,
             }}
           >
             <img
@@ -98,16 +119,16 @@ function ProjectCard({ project }) {
         )}
       </AnimatePresence>
 
-      {/* Content text - on top of everything */}
+      {/* Content text */}
       <div className="absolute inset-0 p-6 flex flex-col justify-between z-20 pointer-events-none">
         <div className="flex justify-between items-start">
-          <span className={`font-mono text-sm px-2 py-1 rounded transition-all duration-300 ${isHovered ? 'text-gray-900 bg-white/60' : 'text-white/40 bg-white/5'}`}>
+          <span className={`font-mono text-base px-3 py-1.5 rounded transition-all duration-300 ${showImage ? 'text-gray-900 bg-white/60' : 'text-white/40 bg-white/5'}`}>
             {project.id}
           </span>
-          <ExternalLink className={`w-5 h-5 transition-colors duration-300 ${isHovered ? 'text-gray-900' : 'text-white/40'}`} />
+          <ExternalLink className={`w-6 h-6 transition-colors duration-300 ${showImage ? 'text-gray-900' : 'text-white/40'}`} />
         </div>
         <div>
-          <h3 className={`text-xl font-medium transition-colors duration-300 ${isHovered ? 'text-gray-900' : 'text-white drop-shadow-lg'}`}>
+          <h3 className={`text-2xl font-medium transition-colors duration-300 ${showImage ? 'text-gray-900' : 'text-white drop-shadow-lg'}`}>
             {project.title}
           </h3>
         </div>
@@ -118,13 +139,13 @@ function ProjectCard({ project }) {
 
 export default function ProjectsGrid() {
   return (
-    <section id="projects" className="relative z-10 max-w-5xl mx-auto px-6 py-24 w-full">
-      <div className="mb-12">
-        <h2 className="text-3xl text-white font-serif tracking-tight">AI实战作品</h2>
-        <p className="text-white/50 mt-2 text-sm">Interactive Web Experiences</p>
+    <section id="projects" className="relative z-10 max-w-5xl mx-auto px-6 py-28 w-full">
+      <div className="mb-14">
+        <h2 className="text-4xl text-white font-serif tracking-tight">AI实战作品</h2>
+        <p className="text-white/50 mt-3 text-base">Interactive Web Experiences</p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         {projects.map((project) => (
           <ProjectCard key={project.id} project={project} />
         ))}

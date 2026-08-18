@@ -19,7 +19,7 @@ export default function RecruiterSidebar() {
     >
       <button 
         onClick={handleClick}
-        className="flex items-center bg-white text-black py-2 px-3 rounded-r-lg shadow-[0_0_15px_rgba(255,255,255,0.25)] hover:pr-4 transition-all group cursor-none"
+        className="flex items-center bg-white text-black py-2 px-3 rounded-r-lg shadow-[0_0_15px_rgba(255,255,255,0.25)] hover:pr-4 hover:scale-[1.05] transition-all duration-300 group cursor-none"
       >
         <span className="text-xs font-semibold tracking-wide whitespace-nowrap" style={{ writingMode: 'vertical-rl' }}>
           招聘官看板

@@ -3,12 +3,11 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { PlayCircle, CheckCircle2, Copy, Phone, Mail, ExternalLink } from 'lucide-react';
 import CardDealAnimation from './CardDealAnimation';
 
-export default function Hero({ onOpenAI }) {
+export default function Hero({ onOpenAI, demoOpen, onDemoOpen }) {
   const [inputMode, setInputMode] = useState(false);
   const [emailValue, setEmailValue] = useState('');
   const [submitted, setSubmitted] = useState(false);
   const [placeholder, setPlaceholder] = useState('');
-  const [demoOpen, setDemoOpen] = useState(false);
   const [copied, setCopied] = useState('');
   
   const [currentLine, setCurrentLine] = useState(0);
@@ -21,7 +20,6 @@ export default function Hero({ onOpenAI }) {
 
   const fullPlaceholder = "输入提问或留存 Email...";
 
-  // Rotating text: each line stays for 2s, then transitions
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentLine((prev) => (prev + 1) % rotatingLines.length);
@@ -65,7 +63,7 @@ export default function Hero({ onOpenAI }) {
   };
 
   return (
-    <section className="relative z-10 min-h-screen flex flex-col items-center justify-center px-6 text-center max-w-5xl mx-auto gap-6 pt-20">
+    <section className="relative z-10 min-h-screen flex flex-col items-center justify-center px-6 text-center max-w-5xl mx-auto gap-8 pt-24">
       <motion.h1
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -80,12 +78,12 @@ export default function Hero({ onOpenAI }) {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.2 }}
-        className="text-white/70 text-[11px] font-medium tracking-[0.25em] uppercase"
+        className="text-white/70 text-xs md:text-sm font-medium tracking-[0.25em] uppercase"
       >
         TAIYUAN UNIVERSITY OF TECHNOLOGY · IOT ENGINEERING
       </motion.p>
 
-      <div className="h-[88px] md:h-[90px] flex items-center justify-center overflow-hidden">
+      <div className="h-[100px] md:h-[104px] flex items-center justify-center overflow-hidden">
           <AnimatePresence mode="wait">
             <motion.h1
               key={currentLine}
@@ -105,7 +103,7 @@ export default function Hero({ onOpenAI }) {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.6 }}
-        className="text-white/70 max-w-2xl text-sm md:text-base leading-relaxed"
+        className="text-white/70 max-w-2xl text-base md:text-lg leading-relaxed"
       >
         太原理工大学物联网工程本科大一新生。对人工智能应用具有高度热情，擅长运用多模型大语言模型协同工作流。
       </motion.p>
@@ -127,13 +125,13 @@ export default function Hero({ onOpenAI }) {
             >
               <button 
                 onClick={onOpenAI}
-                className="glass-pill px-6 py-3 text-white font-medium hover:bg-white/10 transition-colors"
+                className="liquid-glass rounded-full px-6 py-3 text-white font-medium hover:scale-[1.05] transition-all duration-300"
               >
                 与 AI 数字分身对话
               </button>
               <button 
                 onClick={() => setInputMode(true)}
-                className="glass-pill px-6 py-3 text-white/80 font-medium hover:bg-white/10 hover:text-white transition-colors"
+                className="liquid-glass rounded-full px-6 py-3 text-white/80 font-medium hover:scale-[1.05] hover:text-white transition-all duration-300"
               >
                 获取联系资料
               </button>
@@ -224,15 +222,13 @@ export default function Hero({ onOpenAI }) {
         </AnimatePresence>
 
         <button
-          onClick={() => setDemoOpen(true)}
-          className="flex items-center gap-2 text-white/50 hover:text-white/90 transition-colors text-sm font-medium"
+          onClick={onDemoOpen}
+          className="liquid-glass rounded-full px-8 py-4 flex items-center gap-2.5 text-white/90 hover:text-white hover:scale-[1.05] transition-all duration-300 text-base font-medium"
         >
-          <PlayCircle className="w-4 h-4" />
+          <PlayCircle className="w-5 h-5" />
           播放全景项目演示
         </button>
       </motion.div>
-
-      <CardDealAnimation isOpen={demoOpen} onClose={() => setDemoOpen(false)} />
     </section>
   );
 }

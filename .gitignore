@@ -9,3 +9,12 @@ dist-ssr
 .vscode
 .idea
 vercel.json.bak
+
+# Root-level redundant files (duplicates of src/ or public/ versions)
+/*.png
+/*.jpg
+/*.jpeg
+/*.mp3
+/*.mp4
+/*.jsx
+/*.tsx

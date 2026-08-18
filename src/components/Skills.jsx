@@ -37,10 +37,10 @@ const finalPoints = getPolygonPoints(dimensions.map((d) => d.value));
 
 export default function Skills() {
   return (
-    <section id="skills" className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 py-24 w-full">
-      <div className="mb-12">
-        <h2 className="text-3xl text-white font-serif tracking-tight">AI 能力雷达图</h2>
-        <p className="text-white/50 mt-2 text-sm">AI Capability Radar</p>
+    <section id="skills" className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 py-28 w-full">
+      <div className="mb-14">
+        <h2 className="text-4xl text-white font-serif tracking-tight">AI 能力雷达图</h2>
+        <p className="text-white/50 mt-3 text-base">AI Capability Radar</p>
       </div>
 
       <div className="flex justify-center overflow-visible">
