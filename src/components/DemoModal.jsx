@@ -53,9 +53,9 @@ export default function DemoModal({ isOpen, onClose }) {
           >
             <button
               onClick={onClose}
-              className="absolute top-4 right-4 text-white/50 hover:text-white transition-colors z-10"
+              className="absolute top-4 right-4 w-10 h-10 flex items-center justify-center rounded-full bg-white/10 border border-white/20 text-white hover:bg-white/20 hover:scale-110 transition-all z-[60] pointer-events-auto"
             >
-              <X className="w-6 h-6" />
+              <X className="w-5 h-5" />
             </button>
 
             <h2 className="text-2xl text-white font-serif mb-2">全景项目演示</h2>

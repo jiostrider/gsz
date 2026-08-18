@@ -65,11 +65,8 @@ function ProjectCard({ project }) {
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
       onClick={handleClick}
-      className="border border-white/5 rounded-2xl cursor-pointer h-56 relative overflow-hidden group"
+      className="liquid-glass rounded-2xl cursor-pointer h-56 relative overflow-hidden group"
     >
-      {/* Dark background (no image initially) */}
-      <div className="absolute inset-0 bg-[#080c14]" />
-
       {/* White gradient overlay - quickly covers on hover */}
       <div
         className="absolute inset-0 z-10 transition-all duration-300 pointer-events-none"
