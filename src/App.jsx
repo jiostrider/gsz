@@ -6,6 +6,7 @@ import Hero from './components/Hero';
 import Skills from './components/Skills';
 import ProjectsGrid from './components/ProjectsGrid';
 import EducationAndCertificates from './components/EducationAndCertificates';
+import UniqueFeatures from './components/UniqueFeatures';
 import AIDrawer from './components/AIDrawer';
 import RecruiterSidebar from './components/RecruiterSidebar';
 import CustomCursor from './components/CustomCursor';
@@ -67,6 +68,7 @@ function App() {
         <Skills />
         <ProjectsGrid />
         <EducationAndCertificates />
+        <UniqueFeatures />
 
         {/* Footer / Contact */}
         <footer id="contact" className="relative z-10 border-t border-white/10 mt-24">

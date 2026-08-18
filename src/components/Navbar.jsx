@@ -7,6 +7,7 @@ const NAV_ITEMS = [
   { id: 'projects', label: 'AI实战作品' },
   { id: 'education', label: '求学之路' },
   { id: 'certificates', label: '荣誉认证' },
+  { id: 'unique', label: '独特之处' },
   { id: 'contact', label: '联系方式' },
 ];
 
