@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Cpu, PenTool, Users, Sparkles } from 'lucide-react';
+import { Cpu, PenTool, Users, Sparkles, MapPin } from 'lucide-react';
 
 const makerProjects = [
   {
@@ -61,6 +61,16 @@ const volunteerWorks = [
     details: '累计服务时长 60+ 小时',
     date: '2022-10-03',
     image: 'volunteer-2022.jpg',
+  },
+];
+
+const hobbies = [
+  {
+    title: '图寻 / GeoGuessr',
+    subtitle: '地理反向定位猜测',
+    description: '通过街景图像进行地理定位推理，结合地标、植被、路标、建筑风格等线索判断位置，最近猜测精度可达 1m。',
+    detail: '最近猜测精度可达 1m',
+    image: 'geoguessr.png',
   },
 ];
 
@@ -199,6 +209,36 @@ function VolunteerCard({ item, index }) {
   );
 }
 
+function HobbyCard({ item, index }) {
+  return (
+    <motion.div
+      {...fadeInUp}
+      transition={{ delay: index * 0.1 }}
+      className="liquid-glass rounded-xl overflow-hidden"
+    >
+      <div className="relative">
+        <div className="aspect-[16/9] overflow-hidden bg-white/5">
+          <img
+            src={new URL(`../assets/images/${item.image}`, import.meta.url).href}
+            alt={item.title}
+            className="w-full h-full object-cover"
+          />
+        </div>
+      </div>
+      <div className="p-5">
+        <h3 className="text-lg text-white font-medium mb-1">{item.title}</h3>
+        {item.subtitle && <p className="text-white/40 text-xs mb-2">{item.subtitle}</p>}
+        <p className="text-white/60 text-sm leading-relaxed mb-3">{item.description}</p>
+        {item.detail && (
+          <span className="inline-block px-2.5 py-1 rounded-full bg-green-500/10 border border-green-500/20 text-green-400/80 text-xs">
+            {item.detail}
+          </span>
+        )}
+      </div>
+    </motion.div>
+  );
+}
+
 export default function UniqueFeatures() {
   return (
     <section id="unique" className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 py-28 w-full">
@@ -239,6 +279,16 @@ export default function UniqueFeatures() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {volunteerWorks.map((item, i) => (
               <VolunteerCard key={i} item={item} index={i} />
+            ))}
+          </div>
+        </div>
+
+        {/* 兴趣爱好 */}
+        <div>
+          <SectionHeader icon={MapPin} title="兴趣爱好" subtitle="Hobbies & Interests" />
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {hobbies.map((item, i) => (
+              <HobbyCard key={i} item={item} index={i} />
             ))}
           </div>
         </div>

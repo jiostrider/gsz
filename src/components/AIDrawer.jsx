@@ -60,6 +60,9 @@ const knowledgeBase = {
     '擅长多模型大语言模型协同工作流',
     '将 AI 技术应用于学习与创作全流程',
   ],
+  hobbies: [
+    { name: '图寻 / GeoGuessr', description: '通过街景图像进行地理定位推理，结合地标、植被、路标、建筑风格等线索判断位置，最近猜测精度可达 1m。', detail: '最近猜测精度可达 1m' },
+  ],
 };
 
 // =============================================
@@ -145,6 +148,11 @@ const intentPatterns = [
     intent: 'thanks',
     keywords: ['谢谢', '感谢', '谢谢你', '多谢', '感恩', '辛苦了'],
     priority: 4,
+  },
+  {
+    intent: 'hobbies',
+    keywords: ['爱好', '兴趣', '图寻', 'geoguessr', '地理', '猜测', '地图', '定位', '反向', '休闲'],
+    priority: 6,
   },
   {
     intent: 'unknown',
@@ -240,6 +248,9 @@ function reasonAbout(input, intent, context) {
       break;
     case 'projects':
       knowledgeUsed = `检索项目库：共 ${knowledgeBase.projects.length} 个独立作品`;
+      break;
+    case 'hobbies':
+      knowledgeUsed = `检索兴趣爱好库：${knowledgeBase.hobbies.map(h => h.name).join('、')}`;
       break;
     default:
       knowledgeUsed = '检索综合知识库';
@@ -352,8 +363,12 @@ function generateResponse(input, context) {
       response = '不客气！很高兴能为你提供有价值的信息。如果有任何其他问题，随时可以问我。记得保持「永远谦卑、永远进步」的心态！';
       break;
 
+    case 'hobbies':
+      response = `在兴趣爱好方面，他喜欢**图寻 / GeoGuessr**——一种通过街景图像进行地理反向定位推理的游戏。他结合地标、植被、路标、建筑风格等线索判断位置，最近猜测精度可达 **1m**，展现了出色的观察力和地理推理能力。`;
+      break;
+
     case 'help':
-      response = `我可以帮你了解以下内容：\n\n🔹 **核心优势** - 了解高晟哲的核心竞争力\n🔹 **物联网基础** - 教育背景与专业技能\n🔹 **AI 提效** - 人工智能应用能力\n🔹 **独立作品** - 实战项目展示\n🔹 **联系方式** - 电话、邮箱、GitHub、LinkedIn\n🔹 **IQ 评估** - 对我的能力进行多维度测试\n🔹 **情感支持** - 分享心情或困惑\n\n直接输入问题或点击快捷标签即可开始！`;
+      response = `我可以帮你了解以下内容：\n\n🔹 **核心优势** - 了解高晟哲的核心竞争力\n🔹 **物联网基础** - 教育背景与专业技能\n🔹 **AI 提效** - 人工智能应用能力\n🔹 **独立作品** - 实战项目展示\n🔹 **兴趣爱好** - 图寻 GeoGuessr 地理定位\n🔹 **联系方式** - 电话、邮箱、GitHub、LinkedIn\n🔹 **IQ 评估** - 对我的能力进行多维度测试\n🔹 **情感支持** - 分享心情或困惑\n\n直接输入问题或点击快捷标签即可开始！`;
       break;
 
     case 'unknown':
