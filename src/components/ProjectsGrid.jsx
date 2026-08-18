@@ -7,25 +7,25 @@ const projects = [
     id: '01',
     title: 'CET-4 英语四级在线模拟',
     link: 'https://cet-4-online.netlify.app/',
-    image: '/images/cet4.png'
+    image: new URL('../assets/images/cet4.png', import.meta.url).href
   },
   {
     id: '02',
     title: '《飞机大战》',
     link: 'https://feijidazhan0.netlify.app/',
-    image: '/images/feijidazhan.png'
+    image: new URL('../assets/images/feijidazhan.png', import.meta.url).href
   },
   {
     id: '03',
     title: '《小恐龙跑酷》',
     link: 'https://xiaokonglong01.netlify.app/',
-    image: '/images/xiaokonglong.png'
+    image: new URL('../assets/images/xiaokonglong.png', import.meta.url).href
   },
   {
     id: '04',
     title: '《坦克大战·GSZ战场》',
     link: 'https://jiostrider.github.io/tank/',
-    image: '/images/tank.png'
+    image: new URL('../assets/images/tank.png', import.meta.url).href
   }
 ];
 

@@ -15,7 +15,7 @@ export default function EducationAndCertificates() {
           <div className="liquid-glass rounded-xl p-6">
             <div className="flex items-start gap-4">
               <img
-                src="/images/images.png"
+                src={new URL('../assets/images/images.png', import.meta.url).href}
                 alt="太原理工大学"
                 className="w-16 h-16 rounded-lg object-cover flex-shrink-0"
               />
@@ -44,7 +44,7 @@ export default function EducationAndCertificates() {
             <p className="text-white/70 text-sm mb-1">DAMO Academy</p>
             <p className="text-white/40 text-xs font-mono mb-4">ID: AIT260809225938000178</p>
             <div className="rounded-lg overflow-hidden border border-white/10">
-              <img src="/images/certificate.jpg" alt="达摩院 AI 培训师证书" className="w-full h-auto" />
+              <img src={new URL('../assets/images/certificate.jpg', import.meta.url).href} alt="达摩院 AI 培训师证书" className="w-full h-auto" />
             </div>
           </motion.div>
         </div>

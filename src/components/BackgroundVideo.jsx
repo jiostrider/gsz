@@ -50,7 +50,7 @@ export default function BackgroundVideo({ muted = true }) {
       ></video>
       <audio
         ref={audioRef}
-        src="/audio/bgm.mp3"
+        src={new URL('../assets/audio/bgm.mp3', import.meta.url).href}
         loop
         preload="auto"
       />
