@@ -52,17 +52,20 @@ export default function Navbar({ onOpenAI, isAudioOn, onToggleAudio }) {
 
   return (
     <motion.nav
-      initial={{ y: -20, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
       transition={{ duration: 0.8, ease: "easeOut" }}
       className="fixed top-0 left-0 right-0 z-30"
     >
-      <div
+      <motion.div
         ref={barRef}
+        initial={{ y: -20, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.8, ease: "easeOut" }}
         onMouseMove={handleMouseMove}
         onMouseEnter={() => setIsHovering(true)}
         onMouseLeave={() => setIsHovering(false)}
-        className="liquid-glass rounded-full px-6 py-3 flex items-center justify-between max-w-5xl mx-auto my-4 relative overflow-hidden"
+        className="liquid-glass nav-glass rounded-full px-6 py-3 flex items-center justify-between max-w-5xl mx-auto my-4 relative overflow-hidden"
       >
         {/* Pill raise overlay - follows cursor */}
         <div
@@ -131,7 +134,7 @@ export default function Navbar({ onOpenAI, isAudioOn, onToggleAudio }) {
             数字分身
           </button>
         </div>
-      </div>
+      </motion.div>
     </motion.nav>
   );
 }

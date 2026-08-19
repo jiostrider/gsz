@@ -62,6 +62,14 @@ a, button, input, [role="button"] {
   position: relative;
 }
 
+/* 顶部导航栏雾化玻璃：覆盖 liquid-glass 近透明背景，确保半透明模糊效果可见
+   暗色半透明底 + backdrop-filter，黑色背景下仍能清晰呈现磨砂质感 */
+.nav-glass {
+  background: rgba(17, 24, 39, 0.55);
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+}
+
 .liquid-glass::before {
   content: "";
   position: absolute;
