@@ -42,7 +42,7 @@ export default function BackgroundVideo({ muted = true, audioRef: externalAudioR
   }, [muted]);
 
   return (
-    <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
+    <div className="bg-video absolute inset-0 overflow-hidden pointer-events-none z-0">
       <video
         ref={videoRef}
         autoPlay

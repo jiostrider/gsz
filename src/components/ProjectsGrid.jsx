@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { flushSync } from 'react-dom';
 import { ExternalLink } from 'lucide-react';
 
 const projects = [
@@ -34,7 +35,20 @@ function ProjectCard({ project }) {
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   const [isTouchDevice, setIsTouchDevice] = useState(false);
   const [isInView, setIsInView] = useState(false);
+  const [isPrinting, setIsPrinting] = useState(false);
   const cardRef = useRef(null);
+
+  // 打印/导出 PDF 时强制显示项目图片（图片在 AnimatePresence 中按需渲染）
+  useEffect(() => {
+    const onBeforePrint = () => flushSync(() => setIsPrinting(true));
+    const onAfterPrint = () => setIsPrinting(false);
+    window.addEventListener('beforeprint', onBeforePrint);
+    window.addEventListener('afterprint', onAfterPrint);
+    return () => {
+      window.removeEventListener('beforeprint', onBeforePrint);
+      window.removeEventListener('afterprint', onAfterPrint);
+    };
+  }, []);
 
   useEffect(() => {
     setIsTouchDevice('ontouchstart' in window || navigator.maxTouchPoints > 0);
@@ -85,7 +99,7 @@ function ProjectCard({ project }) {
     window.open(project.link, '_blank', 'noopener noreferrer');
   };
 
-  const showImage = isTouchDevice ? isInView : isHovered;
+  const showImage = isPrinting || (isTouchDevice ? isInView : isHovered);
 
   return (
     <div

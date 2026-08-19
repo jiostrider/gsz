@@ -59,7 +59,7 @@ export default function CustomCursor() {
       {/* Outer ring - trailing with delay */}
       <div
         ref={ringRef}
-        className="fixed top-0 left-0 w-8 h-8 rounded-full pointer-events-none z-[9998]"
+        className="custom-cursor-ring fixed top-0 left-0 w-8 h-8 rounded-full pointer-events-none z-[9998]"
         style={{
           border: '1.5px solid rgba(255,255,255,0.5)',
           mixBlendMode: 'difference',

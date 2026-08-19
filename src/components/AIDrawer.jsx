@@ -61,7 +61,7 @@ const knowledgeBase = {
     '将 AI 技术应用于学习与创作全流程',
   ],
   hobbies: [
-    { name: '图寻 / GeoGuessr', description: '通过街景图像进行地理定位推理，结合地标、植被、路标、建筑风格等线索判断位置，猜测精度可达 5m。', detail: '猜测精度可达 5m' },
+    { name: '图寻 / GeoGuessr', description: '通过街景图像进行地理定位推理，结合地标、植被、路标、建筑风格等线索判断位置，猜测精度最高可达 5m。', detail: '猜测精度可达 5m' },
   ],
 };
 

@@ -15,6 +15,38 @@ const certificates = [
     date: '2026.08.19',
     image: 'ai-trainer-cert.jpg',
   },
+  {
+    name: '阿里云 Apsara Clouder · VISION 人工智能设计（入门）',
+    issuer: 'Alibaba Cloud',
+    holder: '高晟哲',
+    id: 'CLDM06260802763267',
+    date: '2028.08.19',
+    image: 'alibaba-cloud-vision-cert.png',
+  },
+  {
+    name: '阿里云 Apsara Clouder · 基于百炼平台构建智能体应用',
+    issuer: 'Alibaba Cloud',
+    holder: '高晟哲',
+    id: 'CLDM02260802762629',
+    date: '2028.08.18',
+    image: 'alibaba-cloud-agent-builder-cert.png',
+  },
+  {
+    name: '阿里云 Apsara Clouder · Spring AI 应用开发（入门）',
+    issuer: 'Alibaba Cloud',
+    holder: '高晟哲',
+    id: 'CLDM09260802763268',
+    date: '2028.08.19',
+    image: 'alibaba-cloud-spring-ai-cert.png',
+  },
+  {
+    name: '阿里云 Apsara Clouder · 基于 PAI ArtLab 的 AIGC 设计基础',
+    issuer: 'Alibaba Cloud',
+    holder: '高晟哲',
+    id: 'CLDM05260802763264',
+    date: '2028.08.19',
+    image: 'alibaba-cloud-aigc-cert.png',
+  },
 ];
 
 export default function EducationAndCertificates() {

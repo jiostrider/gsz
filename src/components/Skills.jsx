@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef, useEffect } from 'react';
 import { motion } from 'framer-motion';
 
 const dimensions = [
@@ -36,6 +36,18 @@ const centerPoints = dimensions.map(() => `${cx},${cy}`).join(' ');
 const finalPoints = getPolygonPoints(dimensions.map((d) => d.value));
 
 export default function Skills() {
+  const polyRef = useRef(null);
+
+  // 打印/导出 PDF 前，将雷达数据多边形强制设为最终展开状态，
+  // 避免 whileInView 动画未触发时打印出“缩在中心”的退化图形
+  useEffect(() => {
+    const onBeforePrint = () => {
+      polyRef.current?.setAttribute('points', finalPoints);
+    };
+    window.addEventListener('beforeprint', onBeforePrint);
+    return () => window.removeEventListener('beforeprint', onBeforePrint);
+  }, []);
+
   return (
     <section id="skills" className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 py-28 w-full">
       <div className="mb-14">
@@ -46,7 +58,7 @@ export default function Skills() {
       <div className="flex justify-center overflow-visible">
         <svg
           viewBox="0 0 560 480"
-          className="w-full max-w-xl"
+          className="radar-svg w-full max-w-xl"
           style={{ overflow: 'visible' }}
         >
           {/* Background grid pentagons */}
@@ -78,6 +90,7 @@ export default function Skills() {
 
           {/* Data polygon - animated from center */}
           <motion.polygon
+            ref={polyRef}
             initial={{ points: centerPoints }}
             whileInView={{ points: finalPoints }}
             viewport={{ once: true, margin: '-100px' }}
