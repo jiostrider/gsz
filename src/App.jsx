@@ -5,6 +5,7 @@ import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import Skills from './components/Skills';
 import ProjectsGrid from './components/ProjectsGrid';
+import PresentationShowcase from './components/PresentationShowcase';
 import EducationAndCertificates from './components/EducationAndCertificates';
 import UniqueFeatures from './components/UniqueFeatures';
 import AIDrawer from './components/AIDrawer';
@@ -67,6 +68,7 @@ function App() {
         <Hero onOpenAI={() => setAiDrawerOpen(true)} demoOpen={demoOpen} onDemoOpen={() => setDemoOpen(true)} />
         <Skills />
         <ProjectsGrid />
+        <PresentationShowcase />
         <EducationAndCertificates />
         <UniqueFeatures />
 

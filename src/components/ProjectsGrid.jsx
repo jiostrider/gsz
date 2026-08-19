@@ -32,13 +32,29 @@ const projects = [
 function ProjectCard({ project }) {
   const [isHovered, setIsHovered] = useState(false);
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
-  const [isTouched, setIsTouched] = useState(false);
   const [isTouchDevice, setIsTouchDevice] = useState(false);
+  const [isInView, setIsInView] = useState(false);
   const cardRef = useRef(null);
 
   useEffect(() => {
     setIsTouchDevice('ontouchstart' in window || navigator.maxTouchPoints > 0);
   }, []);
+
+  // IntersectionObserver: 移动端滚动进入视口时显示图片，离开时恢复液态玻璃效果
+  useEffect(() => {
+    const el = cardRef.current;
+    if (!isTouchDevice || !el) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsInView(entry.isIntersecting);
+      },
+      { threshold: 0.3 }
+    );
+
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [isTouchDevice]);
 
   const handleMouseEnter = (e) => {
     if (isTouchDevice) return;
@@ -66,18 +82,10 @@ function ProjectCard({ project }) {
   };
 
   const handleClick = () => {
-    if (isTouchDevice) {
-      if (!isTouched) {
-        setIsTouched(true);
-        const rect = cardRef.current.getBoundingClientRect();
-        setMousePos({ x: rect.width / 2, y: rect.height / 2 });
-        return;
-      }
-    }
     window.open(project.link, '_blank', 'noopener noreferrer');
   };
 
-  const showImage = isTouchDevice ? isTouched : isHovered;
+  const showImage = isTouchDevice ? isInView : isHovered;
 
   return (
     <div

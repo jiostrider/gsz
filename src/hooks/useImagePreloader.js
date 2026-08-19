@@ -6,7 +6,10 @@ const assetImages = import.meta.glob('../assets/images/*.{png,jpg,jpeg,svg,webp,
   import: 'default',
 });
 
-const assetList = Object.values(assetImages);
+// 大体积动态演示 GIF 不做首屏预加载，交由 <img loading="lazy"> 在滚动到可视区域时按需加载
+const assetList = Object.entries(assetImages)
+  .filter(([key]) => !key.includes('Video Project 3.gif'))
+  .map(([, url]) => url);
 
 function getNetworkType() {
   if (navigator.connection) {

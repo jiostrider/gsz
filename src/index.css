@@ -102,3 +102,43 @@ a, button, input, [role="button"] {
 .darkCardSweep:hover::after {
   transform: translateX(100%);
 }
+
+/* ============================================
+   Swiper - Presentation Showcase
+   ============================================ */
+.presentation-swiper {
+  --swiper-pagination-color: rgba(255, 255, 255, 0.6);
+  --swiper-pagination-bullet-inactive-color: rgba(255, 255, 255, 0.2);
+  --swiper-pagination-bullet-size: 6px;
+  --swiper-pagination-bullet-horizontal-gap: 4px;
+}
+
+.presentation-swiper .swiper-slide {
+  background: rgba(0, 0, 0, 0.3);
+}
+
+.swiper-custom-fraction {
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.05em;
+}
+
+.swiper-custom-prev::after,
+.swiper-custom-next::after {
+  display: none;
+}
+
+.swiper-custom-prev,
+.swiper-custom-next {
+  transition: all 0.2s ease;
+}
+
+.swiper-custom-prev.swiper-button-disabled,
+.swiper-custom-next.swiper-button-disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+/* Fullscreen adjustments */
+.presentation-swiper:fullscreen .swiper-slide img {
+  object-fit: contain;
+}

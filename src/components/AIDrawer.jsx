@@ -61,7 +61,7 @@ const knowledgeBase = {
     '将 AI 技术应用于学习与创作全流程',
   ],
   hobbies: [
-    { name: '图寻 / GeoGuessr', description: '通过街景图像进行地理定位推理，结合地标、植被、路标、建筑风格等线索判断位置，最近猜测精度可达 1m。', detail: '最近猜测精度可达 1m' },
+    { name: '图寻 / GeoGuessr', description: '通过街景图像进行地理定位推理，结合地标、植被、路标、建筑风格等线索判断位置，猜测精度可达 5m。', detail: '猜测精度可达 5m' },
   ],
 };
 
@@ -364,7 +364,7 @@ function generateResponse(input, context) {
       break;
 
     case 'hobbies':
-      response = `在兴趣爱好方面，他喜欢**图寻 / GeoGuessr**——一种通过街景图像进行地理反向定位推理的游戏。他结合地标、植被、路标、建筑风格等线索判断位置，最近猜测精度可达 **1m**，展现了出色的观察力和地理推理能力。`;
+      response = `在兴趣爱好方面，他喜欢**图寻 / GeoGuessr**——一种通过街景图像进行地理反向定位推理的游戏。他结合地标、植被、路标、建筑风格等线索判断位置，猜测精度可达 **5m**，展现了出色的观察力和地理推理能力。`;
       break;
 
     case 'help':
