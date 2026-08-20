@@ -143,11 +143,6 @@ function ProjectCard({ project, index }) {
             {project.label}
           </span>
         )}
-        {project.isGif && (
-          <span className="absolute top-3 left-3 px-2.5 py-1 rounded-full bg-green-500/80 text-white text-xs font-mono">
-            GIF
-          </span>
-        )}
       </div>
       <div className="p-5">
         <h3 className="text-lg text-white font-medium mb-2">{project.title}</h3>
@@ -271,11 +266,6 @@ function HobbyCard({ item, index }) {
             />
           )}
         </div>
-        {item.isGif && (
-          <span className="absolute top-3 left-3 px-2.5 py-1 rounded-full bg-green-500/80 text-white text-xs font-mono">
-            GIF
-          </span>
-        )}
         {item.caption && (
           <span className="absolute bottom-3 left-3 px-2.5 py-1 rounded-full bg-black/60 backdrop-blur-sm border border-white/10 text-white/80 text-xs font-mono">
             {item.caption}
