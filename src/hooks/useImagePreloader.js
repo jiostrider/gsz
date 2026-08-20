@@ -6,10 +6,9 @@ const assetImages = import.meta.glob('../assets/images/*.{png,jpg,jpeg,svg,webp,
   import: 'default',
 });
 
-// 大体积动态演示 GIF 不做首屏预加载，交由 <img loading="lazy"> 在滚动到可视区域时按需加载
-const assetList = Object.entries(assetImages)
-  .filter(([key]) => !key.includes('Video Project 3.gif'))
-  .map(([, url]) => url);
+// 静态图片均已压缩为 WebP 且总体积较小，可整体预加载；
+// 动态演示资源已转为 MP4 视频（不在 glob 范围内），由 LazyVideo 滚动到可视区域时按需加载
+const assetList = Object.entries(assetImages).map(([, url]) => url);
 
 function getNetworkType() {
   if (navigator.connection) {

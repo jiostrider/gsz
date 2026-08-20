@@ -7,13 +7,13 @@ const certificates = [
     name: '达摩院 AI 培训师认证',
     issuer: 'DAMO Academy',
     id: 'AIT260809225938000178',
-    image: 'certificate.jpg',
+    image: 'certificate.webp',
   },
   {
     name: '人工智能训练师（高级）',
     holder: '高晟哲',
     date: '2026.08.19',
-    image: 'ai-trainer-cert.jpg',
+    image: 'ai-trainer-cert.webp',
   },
   {
     name: '阿里云 Apsara Clouder · VISION 人工智能设计（入门）',
@@ -21,7 +21,7 @@ const certificates = [
     holder: '高晟哲',
     id: 'CLDM06260802763267',
     date: '2028.08.19',
-    image: 'alibaba-cloud-vision-cert.png',
+    image: 'alibaba-cloud-vision-cert.webp',
   },
   {
     name: '阿里云 Apsara Clouder · 基于百炼平台构建智能体应用',
@@ -29,7 +29,7 @@ const certificates = [
     holder: '高晟哲',
     id: 'CLDM02260802762629',
     date: '2028.08.18',
-    image: 'alibaba-cloud-agent-builder-cert.png',
+    image: 'alibaba-cloud-agent-builder-cert.webp',
   },
   {
     name: '阿里云 Apsara Clouder · Spring AI 应用开发（入门）',
@@ -37,7 +37,7 @@ const certificates = [
     holder: '高晟哲',
     id: 'CLDM09260802763268',
     date: '2028.08.19',
-    image: 'alibaba-cloud-spring-ai-cert.png',
+    image: 'alibaba-cloud-spring-ai-cert.webp',
   },
   {
     name: '阿里云 Apsara Clouder · 基于 PAI ArtLab 的 AIGC 设计基础',
@@ -45,7 +45,7 @@ const certificates = [
     holder: '高晟哲',
     id: 'CLDM05260802763264',
     date: '2028.08.19',
-    image: 'alibaba-cloud-aigc-cert.png',
+    image: 'alibaba-cloud-aigc-cert.webp',
   },
 ];
 

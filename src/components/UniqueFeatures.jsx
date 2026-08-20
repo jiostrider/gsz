@@ -1,20 +1,23 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Cpu, PenTool, Users, Sparkles, MapPin, Heart } from 'lucide-react';
+import LazyVideo from './LazyVideo';
 
 const makerProjects = [
   {
     title: '自动巡航小车',
     description: '基于 D2-5 巡线模块的智能循迹小车，搭载红外传感器实现自动巡航，跑道宽度 15mm，可沿预设路径稳定行驶。',
     tech: ['D2-5 巡线模块', '红外传感器', '智能循迹'],
-    image: 'line-car.gif',
+    image: 'line-car.mp4',
+    poster: 'line-car-poster.webp',
     isGif: true,
   },
   {
     title: '时钟与温度计结合体',
     description: '融合电子时钟与温度显示的多功能装置，采用七段数码管显示，实时呈现时间与环境温度，兼具实用性与观赏性。',
     tech: ['七段数码管', '实时温度传感', '时钟模块'],
-    image: 'clock-thermo.gif',
+    image: 'clock-thermo.mp4',
+    poster: 'clock-thermo-poster.webp',
     isGif: true,
   },
 ];
@@ -25,19 +28,19 @@ const artWorks = [
     description: '中国美术学院社会美术水平考级证书，素描专业捌级，由专业机构评定，见证多年艺术学习成果。',
     issuer: 'China Academy of Art',
     date: '2020-09-17',
-    image: 'sketch-cert.jpg',
+    image: 'sketch-cert.webp',
     isCertificate: true,
   },
   {
     title: '素描头像作品',
     description: '采用石墨铅笔绘制的人像素描，注重光影层次与结构表现，体现扎实的造型能力。',
-    image: 'sketch-portrait.jpg',
+    image: 'sketch-portrait.webp',
     isCertificate: false,
   },
   {
     title: '素描静物作品',
     description: '静物组合素描练习，运用明暗对比与空间透视，展现物品质感与构图能力。',
-    image: 'sketch-landscape.jpg',
+    image: 'sketch-landscape.webp',
     isCertificate: false,
   },
 ];
@@ -47,13 +50,13 @@ const volunteerWorks = [
     title: '温州市鹿城区白鹿亭慈善联合会志愿活动',
     description: '参与社区志愿者服务，协助组织慈善活动、分发爱心物资，为社区公益事业贡献力量。',
     date: '2021-11-28',
-    image: 'volunteer-2021.jpg',
+    image: 'volunteer-2021.webp',
   },
   {
     title: '白鹿亭慈善联合会志愿义工活动',
     description: '持续参与社区志愿服务，协助开展公益活动策划与执行，传递温暖与爱心。',
     date: '2022-10-03',
-    image: 'volunteer-2022.jpg',
+    image: 'volunteer-2022.webp',
   },
 ];
 
@@ -64,21 +67,24 @@ const hobbies = [
     description: '通过街景图像进行地理定位推理，结合地标、植被、路标、建筑风格等线索判断位置，猜测精度最高可达 5m。',
     detail: '猜测精度最高可达 5m',
     isGif: true,
-    image: 'geoguessr-video.gif',
+    image: 'geoguessr-video.mp4',
+    poster: 'geoguessr-video-poster.webp',
   },
   {
     title: '街景定位演示',
     subtitle: 'GeoGuessr Street View',
     description: 'GeoGuessr 街景模式下的典型场景截图，模拟实际游戏中的地理定位推理过程。',
     isGif: true,
-    image: 'geoguessr-streetview.gif',
+    image: 'geoguessr-streetview.mp4',
+    poster: 'geoguessr-streetview-poster.webp',
   },
   {
     title: '地图定位过程',
     subtitle: 'Map Pinpointing',
     description: '在世界地图上进行位置猜测并验证猜测结果，展示从推理到定位的完整过程。',
     isGif: true,
-    image: 'geoguessr-pinpoint.gif',
+    image: 'geoguessr-pinpoint.mp4',
+    poster: 'geoguessr-pinpoint-poster.webp',
   },
   {
     title: 'Monaco 5K 高分过程',
@@ -86,7 +92,8 @@ const hobbies = [
     description: '在地图中完成一轮 5000 分的高分对局，完整展示街景观察、地图定位到得分结算的全程。',
     caption: 'Monaco 5K过程展示',
     isGif: true,
-    image: 'Video Project 3.gif',
+    image: 'video-project-3.mp4',
+    poster: 'video-project-3-poster.webp',
   },
 ];
 
@@ -115,11 +122,21 @@ function ProjectCard({ project, index }) {
     >
       <div className="relative">
         <div className="aspect-[4/3] overflow-hidden bg-white/5">
-          <img
-            src={new URL(`../assets/images/${project.image}`, import.meta.url).href}
-            alt={project.title}
-            className="w-full h-full object-cover"
-          />
+          {project.isGif ? (
+            <LazyVideo
+              src={new URL(`../assets/images/${project.image}`, import.meta.url).href}
+              poster={project.poster ? new URL(`../assets/images/${project.poster}`, import.meta.url).href : undefined}
+              className="w-full h-full object-cover"
+            />
+          ) : (
+            <img
+              src={new URL(`../assets/images/${project.image}`, import.meta.url).href}
+              alt={project.title}
+              loading="lazy"
+              decoding="async"
+              className="w-full h-full object-cover"
+            />
+          )}
         </div>
         {project.label && (
           <span className="absolute top-3 right-3 px-2.5 py-1 rounded-full bg-black/60 backdrop-blur-sm border border-white/10 text-white/70 text-xs font-mono">
@@ -167,6 +184,8 @@ function CertificateCard({ item, index }) {
           <img
             src={new URL(`../assets/images/${item.image}`, import.meta.url).href}
             alt={item.title}
+            loading="lazy"
+            decoding="async"
             className="w-full h-full object-cover"
           />
         </div>
@@ -202,6 +221,8 @@ function VolunteerCard({ item, index }) {
           <img
             src={new URL(`../assets/images/${item.image}`, import.meta.url).href}
             alt={item.title}
+            loading="lazy"
+            decoding="async"
             className="w-full h-full object-cover"
           />
         </div>
@@ -234,13 +255,21 @@ function HobbyCard({ item, index }) {
     >
       <div className="relative">
         <div className="aspect-[16/9] overflow-hidden bg-white/5">
-          <img
-            src={new URL(`../assets/images/${item.image}`, import.meta.url).href}
-            alt={item.title}
-            loading="lazy"
-            decoding="async"
-            className="w-full h-full object-cover"
-          />
+          {item.isGif ? (
+            <LazyVideo
+              src={new URL(`../assets/images/${item.image}`, import.meta.url).href}
+              poster={item.poster ? new URL(`../assets/images/${item.poster}`, import.meta.url).href : undefined}
+              className="w-full h-full object-cover"
+            />
+          ) : (
+            <img
+              src={new URL(`../assets/images/${item.image}`, import.meta.url).href}
+              alt={item.title}
+              loading="lazy"
+              decoding="async"
+              className="w-full h-full object-cover"
+            />
+          )}
         </div>
         {item.isGif && (
           <span className="absolute top-3 left-3 px-2.5 py-1 rounded-full bg-green-500/80 text-white text-xs font-mono">

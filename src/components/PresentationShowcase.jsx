@@ -12,37 +12,37 @@ const slides = [
     num: '01',
     title: '封面 - Freshman\'s Dilemma',
     subtitle: 'The Paralysis of Choice',
-    image: 'Freshmans-Dilemma-The-Paralysis-of-Choice (1)_01.jpg',
+    image: 'Freshmans-Dilemma-The-Paralysis-of-Choice (1)_01.webp',
   },
   {
     num: '02',
     title: '原文段落展示',
     subtitle: 'Key Passage Analysis',
-    image: 'Freshmans-Dilemma-The-Paralysis-of-Choice (1)_02.jpg',
+    image: 'Freshmans-Dilemma-The-Paralysis-of-Choice (1)_02.webp',
   },
   {
     num: '03',
     title: '重点词汇讲解',
     subtitle: 'Key Vocabulary',
-    image: 'Freshmans-Dilemma-The-Paralysis-of-Choice (1)_03.jpg',
+    image: 'Freshmans-Dilemma-The-Paralysis-of-Choice (1)_03.webp',
   },
   {
     num: '04',
     title: '长难句结构分析',
     subtitle: 'Complex Sentence Structure',
-    image: 'Freshmans-Dilemma-The-Paralysis-of-Choice (1)_04.jpg',
+    image: 'Freshmans-Dilemma-The-Paralysis-of-Choice (1)_04.webp',
   },
   {
     num: '05',
     title: '段落主旨 & 作用',
     subtitle: 'Main Idea & Function',
-    image: 'Freshmans-Dilemma-The-Paralysis-of-Choice (1)_05.jpg',
+    image: 'Freshmans-Dilemma-The-Paralysis-of-Choice (1)_05.webp',
   },
   {
     num: '06',
     title: '课堂讨论',
     subtitle: 'Class Discussion',
-    image: 'Freshmans-Dilemma-The-Paralysis-of-Choice (1)_06.jpg',
+    image: 'Freshmans-Dilemma-The-Paralysis-of-Choice (1)_06.webp',
   },
 ];
 
