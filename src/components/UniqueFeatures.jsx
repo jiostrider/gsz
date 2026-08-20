@@ -63,7 +63,8 @@ const hobbies = [
     subtitle: '地理反向定位猜测',
     description: '通过街景图像进行地理定位推理，结合地标、植被、路标、建筑风格等线索判断位置，猜测精度最高可达 5m。',
     detail: '猜测精度最高可达 5m',
-    image: 'geoguessr.png',
+    isGif: true,
+    image: 'geoguessr-video.gif',
   },
   {
     title: '街景定位演示',
