@@ -81,7 +81,7 @@ export default function EducationAndCertificates() {
             <Award className="w-6 h-6 text-white/70" />
             <h2 className="text-3xl text-white font-serif">荣誉认证</h2>
           </div>
-          <div className="flex flex-col gap-6">
+          <div className="flex flex-col gap-6 print-cert-grid">
             {certificates.map((cert, i) => (
               <motion.div
                 key={cert.name}

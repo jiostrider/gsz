@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { PlayCircle, CheckCircle2, Copy, Phone, Mail, ExternalLink } from 'lucide-react';
+import { PlayCircle, CheckCircle2, Copy, Phone, Mail, ExternalLink, FileDown } from 'lucide-react';
 import CardDealAnimation from './CardDealAnimation';
 
 export default function Hero({ onOpenAI, demoOpen, onDemoOpen }) {
@@ -63,13 +63,13 @@ export default function Hero({ onOpenAI, demoOpen, onDemoOpen }) {
   };
 
   return (
-    <section className="relative z-10 min-h-screen flex flex-col items-center justify-center px-6 text-center max-w-5xl mx-auto gap-8 pt-24">
+    <section className="relative z-10 min-h-screen flex flex-col items-center justify-center px-6 text-center max-w-5xl mx-auto gap-8">
       <motion.h1
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.1 }}
         style={{ fontFamily: "'Instrument Serif', serif" }}
-        className="text-7xl md:text-[96px] font-normal tracking-[-0.02em] bg-gradient-to-b from-white via-white/90 to-white/50 bg-clip-text text-transparent"
+        className="text-8xl md:text-[192px] font-normal tracking-[-0.02em] bg-gradient-to-b from-white via-white/90 to-white/50 bg-clip-text text-transparent"
       >
         高晟哲
       </motion.h1>
@@ -78,12 +78,12 @@ export default function Hero({ onOpenAI, demoOpen, onDemoOpen }) {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.2 }}
-        className="text-white/70 text-xs md:text-sm font-medium tracking-[0.25em] uppercase"
+        className="text-white/70 text-sm md:text-[28px] font-medium tracking-[0.25em] uppercase"
       >
         TAIYUAN UNIVERSITY OF TECHNOLOGY · IOT ENGINEERING
       </motion.p>
 
-      <div className="h-[100px] md:h-[104px] flex items-center justify-center overflow-hidden">
+      <div className="hero-rotating h-[100px] md:h-[104px] flex items-center justify-center overflow-hidden">
           <AnimatePresence mode="wait">
             <motion.h1
               key={currentLine}
@@ -98,6 +98,13 @@ export default function Hero({ onOpenAI, demoOpen, onDemoOpen }) {
             </motion.h1>
           </AnimatePresence>
         </div>
+
+      {/* 打印专用：三句座右铭同时显示，字体为“高晟哲”的一半（屏幕浏览时隐藏） */}
+      <div className="print-rotating-lines" aria-hidden>
+        {rotatingLines.map((line) => (
+          <p key={line} className="print-rotating-line">{line}</p>
+        ))}
+      </div>
 
       <motion.p 
         initial={{ opacity: 0, y: 20 }}
@@ -135,6 +142,14 @@ export default function Hero({ onOpenAI, demoOpen, onDemoOpen }) {
               >
                 获取联系资料
               </button>
+              <a
+                href="/resume.pdf"
+                download="高晟哲-简历.pdf"
+                className="liquid-glass rounded-full px-6 py-3 flex items-center gap-2 text-white/80 font-medium hover:scale-[1.05] hover:text-white transition-all duration-300 print:hidden"
+              >
+                <FileDown className="w-4 h-4" />
+                下载 PDF 简历
+              </a>
             </motion.div>
           ) : !submitted ? (
             <motion.form

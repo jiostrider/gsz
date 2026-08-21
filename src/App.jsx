@@ -79,7 +79,7 @@ function App() {
               <h3 className="text-2xl text-white font-serif">Jimmy Gao</h3>
               <p className="text-white/50 text-base mt-1">IoT Engineering · Full Stack AI</p>
             </div>
-            <div className="flex items-center gap-6 text-base text-white/50">
+            <div className="contact-links flex items-center gap-6 text-base text-white/50">
               <a href="tel:19229770095" className="flex items-center gap-1.5 hover:text-white transition-colors">
                 <Phone className="w-3.5 h-3.5" />
                 19229770095

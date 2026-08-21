@@ -303,7 +303,7 @@ export default function UniqueFeatures() {
         {/* 电子创客项目 */}
         <div>
           <SectionHeader icon={Cpu} title="电子创客" subtitle="Electronic Maker" />
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 maker-grid">
             {makerProjects.map((p, i) => (
               <ProjectCard key={i} project={p} index={i} />
             ))}
@@ -313,7 +313,7 @@ export default function UniqueFeatures() {
         {/* 艺术能力 */}
         <div>
           <SectionHeader icon={PenTool} title="艺术能力" subtitle="Artistic Ability" />
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 art-grid">
             {artWorks.map((item, i) => (
               <CertificateCard key={i} item={item} index={i} />
             ))}
@@ -323,7 +323,7 @@ export default function UniqueFeatures() {
         {/* 社会责任实践 */}
         <div>
           <SectionHeader icon={Users} title="社会责任" subtitle="Social Responsibility" />
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 volunteer-grid">
             {volunteerWorks.map((item, i) => (
               <VolunteerCard key={i} item={item} index={i} />
             ))}
@@ -333,7 +333,7 @@ export default function UniqueFeatures() {
         {/* 兴趣爱好 */}
         <div>
           <SectionHeader icon={MapPin} title="兴趣爱好" subtitle="Hobbies & Interests" />
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 hobby-grid">
             {hobbies.map((item, i) => (
               <HobbyCard key={i} item={item} index={i} />
             ))}

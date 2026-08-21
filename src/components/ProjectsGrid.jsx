@@ -1,5 +1,4 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
 import { flushSync } from 'react-dom';
 import { ExternalLink } from 'lucide-react';
 
@@ -119,27 +118,23 @@ function ProjectCard({ project }) {
         }}
       />
 
-      {/* Image pop */}
-      <AnimatePresence>
-        {showImage && (
-          <motion.div
-            initial={{ scale: 0, rotate: -90, opacity: 0 }}
-            animate={{ scale: 1, rotate: 0, opacity: 1 }}
-            exit={{ scale: 0, rotate: 90, opacity: 0 }}
-            transition={{ type: 'spring', stiffness: 120, damping: 14, mass: 0.8 }}
-            className="absolute inset-0 z-[15] pointer-events-none"
-            style={{
-              transformOrigin: isTouchDevice ? '50% 50%' : `${mousePos.x}px ${mousePos.y}px`,
-            }}
-          >
-            <img
-              src={project.image}
-              alt={project.title}
-              className="w-full h-full object-cover"
-            />
-          </motion.div>
-        )}
-      </AnimatePresence>
+      {/* Image - 常驻 DOM，hover / 滚动进入视口 / 打印时显示（透明度控制，保证任何场景都能出图） */}
+      <div
+        className="absolute inset-0 z-[15] pointer-events-none transition-all duration-300"
+        style={{
+          opacity: showImage ? 1 : 0,
+          transform: showImage ? 'scale(1) rotate(0deg)' : 'scale(0.9) rotate(-6deg)',
+          transformOrigin: isTouchDevice ? '50% 50%' : `${mousePos.x}px ${mousePos.y}px`,
+        }}
+      >
+        <img
+          src={project.image}
+          alt={project.title}
+          loading="lazy"
+          decoding="async"
+          className="w-full h-full object-cover"
+        />
+      </div>
 
       {/* Content text */}
       <div className="absolute inset-0 p-6 flex flex-col justify-between z-20 pointer-events-none">
