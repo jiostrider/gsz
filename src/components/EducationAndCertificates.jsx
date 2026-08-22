@@ -69,7 +69,7 @@ export default function EducationAndCertificates() {
               <div>
                 <h3 className="text-xl text-white font-medium">太原理工大学 <span className="text-sm text-blue-400 font-mono ml-1">211 双一流</span></h3>
                 <p className="text-white/70 mt-2 text-base">物联网工程 / 本科在读</p>
-                <p className="text-white/40 text-base mt-2 font-mono">2026.9 - 2030.9（预计）</p>
+                <p className="text-white/40 text-base mt-2 font-mono">2026.9 - 2030.6（预计）</p>
               </div>
             </div>
           </div>

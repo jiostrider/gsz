@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>高晟哲 | 个人在线简历</title>
+  <!--
+    ============================================================
+    个人在线简历 · 纯静态单文件版
+    - 零外部依赖：双击即可打开（无需服务器 / npm / 网络）
+    - 响应式设计：适配 PC 与移动端
+    - 主题风格：深色渐变 + 蓝紫点缀，与作品集网站保持一致
+    ============================================================
+  -->
+  <style>
+    /* ========== 设计变量（统一配色与间距） ========== */
+    :root {
+      --bg: #05060a;
+      --bg-card: rgba(255, 255, 255, 0.04);
+      --border: rgba(255, 255, 255, 0.1);
+      --text: #f5f6f8;
+      --text-dim: #9aa0ab;
+      --accent: #6366f1;
+      --accent-2: #a78bfa;
+      --grad: linear-gradient(135deg, #6366f1, #a78bfa);
+      --radius: 16px;
+      --max-w: 1024px;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: "Segoe UI", "PingFang SC", "Microsoft YaHei", system-ui, sans-serif;
+      background:
+        radial-gradient(900px 500px at 85% -10%, rgba(99, 102, 241, 0.18), transparent 60%),
+        radial-gradient(700px 400px at -10% 40%, rgba(167, 139, 250, 0.12), transparent 60%),
+        var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      min-height: 100vh;
+    }
+
+    /* ========== 顶部个人信息区 ========== */
+    .hero {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 72px 24px 40px;
+      text-align: center;
+    }
+    /* 头像：渐变圆环 + 首字母，无需图片素材 */
+    .avatar {
+      width: 96px; height: 96px;
+      margin: 0 auto 20px;
+      border-radius: 50%;
+      background: var(--grad);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 40px; font-weight: 700;
+      box-shadow: 0 0 40px rgba(99, 102, 241, 0.45);
+    }
+    .hero h1 { font-size: clamp(34px, 6vw, 52px); letter-spacing: 0.02em; }
+    .hero .tagline {
+      margin-top: 8px;
+      color: var(--text-dim);
+      font-size: 14px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+    }
+    /* 座右铭旋转（打字机效果由 JS 驱动） */
+    .motto {
+      margin-top: 18px;
+      font-size: 18px;
+      color: var(--accent-2);
+      min-height: 30px;
+    }
+    .motto::before { content: "「 "; color: var(--text-dim); }
+    .motto::after  { content: " 」"; color: var(--text-dim); }
+
+    /* 联系方式按钮组 */
+    .contacts {
+      margin-top: 28px;
+      display: flex; flex-wrap: wrap;
+      justify-content: center; gap: 12px;
+    }
+    .contacts a, .contacts span {
+      padding: 8px 18px;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.03);
+      color: var(--text);
+      text-decoration: none;
+      font-size: 14px;
+      transition: border-color 0.3s, transform 0.3s, background 0.3s;
+    }
+    .contacts a:hover {
+      border-color: var(--accent);
+      background: rgba(99, 102, 241, 0.15);
+      transform: translateY(-2px);
+    }
+
+    /* ========== 主体版式 ========== */
+    .container { max-width: var(--max-w); margin: 0 auto; padding: 0 24px 40px; }
+
+    section { margin-bottom: 56px; }
+
+    .section-title {
+      display: flex; align-items: center; gap: 12px;
+      font-size: 24px; font-weight: 600;
+      margin-bottom: 24px;
+    }
+    .section-title::after {
+      content: "";
+      flex: 1; height: 1px;
+      background: linear-gradient(90deg, var(--border), transparent);
+    }
+    /* 标题旁的小图标 */
+    .section-title .ico { color: var(--accent-2); }
+
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px;
+      transition: transform 0.3s, border-color 0.3s;
+    }
+    .card:hover { transform: translateY(-4px); border-color: rgba(99, 102, 241, 0.5); }
+
+    /* 滚动入场动画（JS 添加 .in-view 触发） */
+    .reveal { opacity: 0; transform: translateY(24px); transition: all 0.7s ease; }
+    .reveal.in-view { opacity: 1; transform: none; }
+
+    /* ========== 教育背景 ========== */
+    .edu { display: flex; flex-wrap: wrap; align-items: center; gap: 20px; }
+    .edu-badge {
+      width: 72px; height: 72px; flex: 0 0 72px;
+      border-radius: 14px;
+      background: var(--grad);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 26px; font-weight: 700;
+    }
+    .edu h3 { font-size: 20px; }
+    .edu .sub { color: var(--text-dim); font-size: 15px; }
+    .edu .badge211 {
+      display: inline-block; margin-left: 8px;
+      padding: 2px 10px; border-radius: 999px;
+      font-size: 12px; color: #93c5fd;
+      border: 1px solid rgba(99, 102, 241, 0.5);
+      vertical-align: middle;
+    }
+
+    /* ========== 技能进度条 ========== */
+    .skills { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+    .skill-item .name { display: flex; justify-content: space-between; font-size: 15px; margin-bottom: 8px; }
+    .bar { height: 8px; border-radius: 999px; background: rgba(255, 255, 255, 0.08); overflow: hidden; }
+    .bar > i {
+      display: block; height: 100%;
+      width: 0;
+      border-radius: 999px;
+      background: var(--grad);
+      transition: width 1.2s ease;
+    }
+
+    /* ========== 项目经历卡片网格 ========== */
+    .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+    .project .thumb {
+      height: 150px; border-radius: 12px; margin-bottom: 14px;
+      background: linear-gradient(135deg, rgba(99,102,241,0.25), rgba(167,139,250,0.15));
+      overflow: hidden;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .project .thumb img { width: 100%; height: 100%; object-fit: cover; }
+    .project .thumb .ph { color: var(--text-dim); font-size: 40px; }
+    .project h3 { font-size: 18px; }
+    .project p { color: var(--text-dim); font-size: 14px; margin-top: 6px; }
+    .project a {
+      display: inline-block; margin-top: 12px;
+      color: var(--accent-2); font-size: 14px; text-decoration: none;
+    }
+    .project a:hover { text-decoration: underline; }
+
+    /* ========== 证书列表 ========== */
+    .certs { display: flex; flex-direction: column; gap: 12px; }
+    .cert { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+    .cert .org { color: var(--text-dim); font-size: 13px; margin-top: 2px; }
+    .cert .date { color: var(--text-dim); font-size: 13px; white-space: nowrap; }
+
+    /* ========== 经历/爱好 ========== */
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    .timeline { list-style: none; }
+    .timeline li {
+      position: relative; padding: 0 0 20px 22px;
+      border-left: 1px solid var(--border);
+      margin-left: 8px;
+    }
+    .timeline li::before {
+      content: ""; position: absolute; left: -5px; top: 6px;
+      width: 9px; height: 9px; border-radius: 50%;
+      background: var(--accent);
+    }
+    .timeline .t-title { font-weight: 600; }
+    .timeline .t-date { color: var(--text-dim); font-size: 13px; }
+    .timeline .t-desc { color: var(--text-dim); font-size: 14px; }
+
+    /* ========== 页脚 ========== */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 32px 24px;
+      text-align: center;
+      color: var(--text-dim);
+      font-size: 14px;
+    }
+    footer a { color: var(--accent-2); text-decoration: none; }
+
+    /* ========== 响应式：移动端 ========== */
+    @media (max-width: 720px) {
+      .grid, .skills, .two-col { grid-template-columns: 1fr; }
+      .hero { padding-top: 48px; }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- ==================== 顶部：个人基本信息 ==================== -->
+  <header class="hero">
+    <div class="avatar">高</div>
+    <h1>高晟哲 <small style="color:var(--text-dim);font-weight:400;font-size:20px;">Jimmy Gao</small></h1>
+    <p class="tagline">Taiyuan University of Technology · IoT Engineering</p>
+    <p class="motto" id="motto">系统化逻辑思维</p>
+
+    <div class="contacts">
+      <a href="tel:19229770095">📞 19229770095</a>
+      <a href="mailto:wzgsz2008@foxmail.com">✉️ wzgsz2008@foxmail.com</a>
+      <a href="https://github.com/jiostrider" target="_blank" rel="noopener noreferrer">GitHub</a>
+      <a href="https://www.linkedin.com/in/%E6%99%9F%E5%93%B2-%E9%AB%98-62503742a/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- ==================== 关于我 ==================== -->
+    <section class="reveal">
+      <h2 class="section-title"><span class="ico">✧</span> 关于我</h2>
+      <div class="card">
+        <p>太原理工大学物联网工程专业本科在读大一新生。对人工智能应用具有高度热情，擅长运用多模型大语言模型构建协同工作流。</p>
+        <p style="margin-top:10px;color:var(--text-dim);">个人信条：系统化逻辑思维 · 永远谦卑 · 永远进步</p>
+      </div>
+    </section>
+
+    <!-- ==================== 教育背景 ==================== -->
+    <section class="reveal">
+      <h2 class="section-title"><span class="ico">🎓</span> 教育背景</h2>
+      <div class="card edu">
+        <div class="edu-badge">TUT</div>
+        <div>
+          <h3>太原理工大学 <span class="badge211">211 · 双一流</span></h3>
+          <p class="sub">物联网工程 / 本科在读</p>
+          <p class="sub">2026.9 — 2030.9（预计）</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== 专业技能 ==================== -->
+    <section class="reveal">
+      <h2 class="section-title"><span class="ico">⚡</span> 专业技能</h2>
+      <div class="skills">
+        <div class="skill-item card">
+          <div class="name"><span>网页制作</span><span>90%</span></div>
+          <div class="bar"><i data-w="90%"></i></div>
+        </div>
+        <div class="skill-item card">
+          <div class="name"><span>AI 工作流编排</span><span>85%</span></div>
+          <div class="bar"><i data-w="85%"></i></div>
+        </div>
+        <div class="skill-item card">
+          <div class="name"><span>PPT 设计</span><span>80%</span></div>
+          <div class="bar"><i data-w="80%"></i></div>
+        </div>
+        <div class="skill-item card">
+          <div class="name"><span>Prompt Engineering</span><span>80%</span></div>
+          <div class="bar"><i data-w="80%"></i></div>
+        </div>
+        <div class="skill-item card">
+          <div class="name"><span>多模型协同</span><span>80%</span></div>
+          <div class="bar"><i data-w="80%"></i></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== 项目经历 ==================== -->
+    <section class="reveal">
+      <h2 class="section-title"><span class="ico">🛠</span> 项目经历</h2>
+      <div class="grid">
+        <div class="card project">
+          <div class="thumb">
+            <img src="./src/assets/images/cet4.webp" alt="CET-4 英语四级在线模拟" onerror="this.parentNode.innerHTML='<span class=\'ph\'>📝</span>'" />
+          </div>
+          <h3>CET-4 英语四级在线模拟</h3>
+          <p>在线英语四级模拟练习平台，支持真题训练与答案解析。</p>
+          <a href="https://cet-4-online.netlify.app/" target="_blank" rel="noopener noreferrer">在线访问 →</a>
+        </div>
+        <div class="card project">
+          <div class="thumb">
+            <img src="./src/assets/images/feijidazhan.webp" alt="飞机大战" onerror="this.parentNode.innerHTML='<span class=\'ph\'>✈️</span>'" />
+          </div>
+          <h3>《飞机大战》</h3>
+          <p>经典街机风格的飞行射击游戏，键盘操控、敌机波次与计分系统。</p>
+          <a href="https://feijidazhan0.netlify.app/" target="_blank" rel="noopener noreferrer">在线访问 →</a>
+        </div>
+        <div class="card project">
+          <div class="thumb">
+            <img src="./src/assets/images/xiaokonglong.webp" alt="小恐龙跑酷" onerror="this.parentNode.innerHTML='<span class=\'ph\'>🦖</span>'" />
+          </div>
+          <h3>《小恐龙跑酷》</h3>
+          <p>类 Chrome 恐龙的小游戏，障碍躲避与速度递增机制。</p>
+          <a href="https://xiaokonglong01.netlify.app/" target="_blank" rel="noopener noreferrer">在线访问 →</a>
+        </div>
+        <div class="card project">
+          <div class="thumb">
+            <img src="./src/assets/images/tank.webp" alt="坦克大战 GSZ 战场" onerror="this.parentNode.innerHTML='<span class=\'ph\'>🛡</span>'" />
+          </div>
+          <h3>《坦克大战·GSZ战场》</h3>
+          <p>自研坦克大战对战小游戏，含关卡、敌人 AI 与道具系统。</p>
+          <a href="https://jiostrider.github.io/tank/" target="_blank" rel="noopener noreferrer">在线访问 →</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== 荣誉认证 ==================== -->
+    <section class="reveal">
+      <h2 class="section-title"><span class="ico">🏅</span> 荣誉认证</h2>
+      <div class="card certs">
+        <div class="cert">
+          <div><strong>人工智能训练师（高级）</strong><div class="org">持证：高晟哲</div></div>
+          <span class="date">2026.08.19</span>
+        </div>
+        <div class="cert">
+          <div><strong>达摩院 AI 培训师认证</strong><div class="org">DAMO Academy · AIT260809225938000178</div></div>
+          <span class="date">—</span>
+        </div>
+        <div class="cert">
+          <div><strong>阿里云 Apsara Clouder · VISION 人工智能设计（入门）</strong><div class="org">Alibaba Cloud · CLDM06260802763267</div></div>
+          <span class="date">2028.08.19</span>
+        </div>
+        <div class="cert">
+          <div><strong>阿里云 Apsara Clouder · 基于百炼平台构建智能体应用</strong><div class="org">Alibaba Cloud · CLDM02260802762629</div></div>
+          <span class="date">2028.08.18</span>
+        </div>
+        <div class="cert">
+          <div><strong>阿里云 Apsara Clouder · Spring AI 应用开发（入门）</strong><div class="org">Alibaba Cloud · CLDM09260802763268</div></div>
+          <span class="date">2028.08.19</span>
+        </div>
+        <div class="cert">
+          <div><strong>阿里云 Apsara Clouder · 基于 PAI ArtLab 的 AIGC 设计基础</strong><div class="org">Alibaba Cloud · CLDM05260802763264</div></div>
+          <span class="date">2028.08.19</span>
+        </div>
+        <div class="cert">
+          <div><strong>素描专业捌级证书</strong><div class="org">中国美术学院社会美术水平考级</div></div>
+          <span class="date">2020.09.17</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== 实践经历 ==================== -->
+    <section class="reveal">
+      <h2 class="section-title"><span class="ico">🔧</span> 实践经历</h2>
+      <div class="two-col">
+        <div class="card">
+          <h3 style="margin-bottom:14px;">硬件制作</h3>
+          <ul class="timeline">
+            <li>
+              <div class="t-title">自动巡航小车</div>
+              <p class="t-desc">基于 D2-5 巡线模块的智能循迹小车，搭载红外传感器实现自动巡航，可沿预设路径稳定行驶。</p>
+            </li>
+            <li>
+              <div class="t-title">时钟与温度计结合体</div>
+              <p class="t-desc">七段数码管显示，实时呈现时间与环境温度，兼具实用性与观赏性。</p>
+            </li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3 style="margin-bottom:14px;">志愿服务</h3>
+          <ul class="timeline">
+            <li>
+              <div class="t-title">温州市鹿城区白鹿亭慈善联合会志愿活动</div>
+              <div class="t-date">2021.11.28</div>
+              <p class="t-desc">协助组织慈善活动、分发爱心物资，为社区公益事业贡献力量。</p>
+            </li>
+            <li>
+              <div class="t-title">白鹿亭慈善联合会志愿义工活动</div>
+              <div class="t-date">2022.10.03</div>
+              <p class="t-desc">持续参与社区志愿服务，协助开展公益活动策划与执行。</p>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== 个人爱好 ==================== -->
+    <section class="reveal">
+      <h2 class="section-title"><span class="ico">🎨</span> 个人爱好</h2>
+      <div class="two-col">
+        <div class="card">
+          <h3>图寻 / GeoGuessr</h3>
+          <p style="color:var(--text-dim);font-size:14px;margin-top:6px;">
+            地理反向定位推理爱好者，通过街景中的地标、植被、路标等线索定位，猜测精度最高可达 5m，曾完成 Monaco 地图 5000 分满分对局。
+          </p>
+        </div>
+        <div class="card">
+          <h3>素描绘画</h3>
+          <p style="color:var(--text-dim);font-size:14px;margin-top:6px;">
+            拥有中国美术学院素描捌级证书，擅长人物头像与静物写生，注重光影层次与结构表现。
+          </p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ==================== 页脚 ==================== -->
+  <footer>
+    <p>高晟哲 · Jimmy Gao · 太原理工大学物联网工程</p>
+    <p style="margin-top:6px;">
+      邮箱 <a href="mailto:wzgsz2008@foxmail.com">wzgsz2008@foxmail.com</a>
+      · GitHub <a href="https://github.com/jiostrider" target="_blank" rel="noopener noreferrer">jiostrider</a>
+    </p>
+  </footer>
+
+  <script>
+    // ============ 座右铭打字机效果 ============
+    (function () {
+      const lines = ['系统化逻辑思维', '永远谦卑', '永远进步'];
+      const el = document.getElementById('motto');
+      let li = 0, ci = 0, deleting = false;
+
+      function tick() {
+        const text = lines[li];
+        el.textContent = text.slice(0, ci);
+        if (!deleting) {
+          if (ci < text.length) { ci++; setTimeout(tick, 130); }
+          else { deleting = true; setTimeout(tick, 1800); }
+        } else {
+          if (ci > 0) { ci--; setTimeout(tick, 45); }
+          else { deleting = false; li = (li + 1) % lines.length; setTimeout(tick, 300); }
+        }
+      }
+      tick();
+    })();
+
+    // ============ 技能条滚动后增长 ============
+    (function () {
+      const bars = document.querySelectorAll('.bar i');
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.style.width = entry.target.dataset.w;
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.4 });
+      bars.forEach((bar) => observer.observe(bar));
+    })();
+
+    // ============ 滚动入场动画 ============
+    (function () {
+      const items = document.querySelectorAll('.reveal');
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('in-view');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.12 });
+      items.forEach((item) => observer.observe(item));
+    })();
+  </script>
+</body>
+</html>
