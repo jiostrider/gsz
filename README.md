@@ -56,4 +56,3 @@ npm run preview
 
 - 邮箱：wzgsz2008@foxmail.com
 - GitHub：[jiostrider](https://github.com/jiostrider)
-- LinkedIn：[高晟哲](https://www.linkedin.com/in/晟哲-高-62503742a/)
