@@ -11,7 +11,8 @@ export default function Hero({ onOpenAI, demoOpen, onDemoOpen }) {
   const [copied, setCopied] = useState('');
   
   const [currentLine, setCurrentLine] = useState(0);
-  
+  const [resumeAvailable, setResumeAvailable] = useState(true);
+
   const rotatingLines = [
     '系统化逻辑思维',
     '永远谦卑',
@@ -19,6 +20,17 @@ export default function Hero({ onOpenAI, demoOpen, onDemoOpen }) {
   ];
 
   const fullPlaceholder = "输入提问或留存 Email...";
+
+  // 预检简历文件是否可访问且确为 PDF（而非被 SPA 路由重写为 HTML）。
+  // 若不可用则禁用下载按钮，给出明确反馈而非浏览器静默报错
+  useEffect(() => {
+    fetch('resume.pdf', { method: 'HEAD' })
+      .then((res) => {
+        const type = res.headers.get('content-type') || '';
+        setResumeAvailable(res.ok && type.includes('pdf'));
+      })
+      .catch(() => setResumeAvailable(false));
+  }, []);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -142,14 +154,24 @@ export default function Hero({ onOpenAI, demoOpen, onDemoOpen }) {
               >
                 获取联系资料
               </button>
-              <a
-                href="/resume.pdf"
-                download="高晟哲-简历.pdf"
-                className="liquid-glass rounded-full px-6 py-3 flex items-center gap-2 text-white/80 font-medium hover:scale-[1.05] hover:text-white transition-all duration-300 print:hidden"
-              >
-                <FileDown className="w-4 h-4" />
-                下载 PDF 简历
-              </a>
+              {resumeAvailable ? (
+                <a
+                  href="resume.pdf"
+                  download="高晟哲-简历.pdf"
+                  className="liquid-glass rounded-full px-6 py-3 flex items-center gap-2 text-white/80 font-medium hover:scale-[1.05] hover:text-white transition-all duration-300 print:hidden"
+                >
+                  <FileDown className="w-4 h-4" />
+                  下载 PDF 简历
+                </a>
+              ) : (
+                <span
+                  title="简历文件暂不可用，请稍后重试"
+                  className="liquid-glass rounded-full px-6 py-3 flex items-center gap-2 text-white/40 opacity-60 cursor-not-allowed print:hidden"
+                >
+                  <FileDown className="w-4 h-4" />
+                  简历暂不可用
+                </span>
+              )}
             </motion.div>
           ) : !submitted ? (
             <motion.form
