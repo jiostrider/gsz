@@ -1,0 +1,452 @@
+@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-serif: "Instrument Serif", serif;
+}
+
+:root {
+  --background: #000000;
+  --foreground: #ffffff;
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  letter-spacing: -0.01em;
+  overflow-x: hidden;
+  cursor: none;
+}
+
+* {
+  cursor: none !important;
+}
+
+a, button, input, [role="button"] {
+  cursor: none !important;
+}
+
+/* ============================================
+   打印 / 导出 PDF 样式
+   ============================================ */
+@media print {
+  @page {
+    size: A4;
+    margin: 12mm 14mm;
+  }
+
+  /* 基础：白底深字 */
+  body {
+    background: #ffffff !important;
+    color: #1a1a1a !important;
+    overflow: visible !important;
+    cursor: auto !important;
+  }
+  body, * {
+    cursor: auto !important;
+  }
+
+  /* 允许打印背景色，保证浅灰卡片底与 SVG 着色正确输出 */
+  * {
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+  }
+
+  /* 消除 framer-motion 动画残留（初始 opacity:0 / 位移 / 模糊） */
+  * {
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    animation: none !important;
+    transition: none !important;
+  }
+
+  /* 隐藏所有 fixed 悬浮层：导航、侧边栏、光标、抽屉、加载屏、启动页、演示弹层 */
+  [class*="fixed"] {
+    display: none !important;
+  }
+  video, audio, .bg-video {
+    display: none !important;
+  }
+
+  /* 交互控件不出现在 PDF 中 */
+  button, input, textarea, select {
+    display: none !important;
+  }
+
+  /* ---- 文字颜色统一为深色系 ---- */
+  [class*="text-white"] {
+    color: #1a1a1a !important;
+    -webkit-text-fill-color: #1a1a1a !important;
+  }
+  [class*="text-white/"] {
+    color: #3f3f3f !important;
+    -webkit-text-fill-color: #3f3f3f !important;
+  }
+  [class*="text-transparent"] {
+    color: #1a1a1a !important;
+    -webkit-text-fill-color: #1a1a1a !important;
+  }
+  [class*="text-gray-"] {
+    color: #333333 !important;
+    -webkit-text-fill-color: #333333 !important;
+  }
+  [class*="text-blue-400"], [class*="text-green-400"],
+  [class*="text-purple-400"], [class*="text-red-400"] {
+    color: #4338ca !important;
+  }
+
+  /* Hero 渐变剪裁文字恢复为深色实心 */
+  [class*="bg-clip-text"] {
+    background: none !important;
+    -webkit-text-fill-color: #1a1a1a !important;
+  }
+
+  /* ---- 深色 / 半透明背景统一为白色 ---- */
+  [class*="bg-black"] {
+    background-color: #ffffff !important;
+  }
+  [class*="bg-\[#"] {
+    background-color: #ffffff !important;
+  }
+  [class*="bg-gradient"] {
+    background-image: none !important;
+  }
+  [class*="bg-white/"] {
+    background-color: #f2f2f2 !important;
+  }
+
+  /* 液体玻璃卡片：浅灰底 + 细边框，形成清晰层次 */
+  .liquid-glass {
+    background: #fafafa !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08) !important;
+    border: 1px solid #e3e3e3 !important;
+  }
+  .liquid-glass::before {
+    display: none !important;
+  }
+
+  /* 边框统一浅灰 */
+  [class*="border-white/"] {
+    border-color: #d9d9d9 !important;
+  }
+  [class*="border-green-500/"], [class*="border-red-400/"] {
+    border-color: #d1d5db !important;
+  }
+
+  /* ---- 排版与布局 ---- */
+  h1, h2, h3, h4 {
+    color: #111111 !important;
+    /* 标题不孤悬页尾：与紧随其后的内容同页 */
+    break-after: avoid;
+    page-break-after: avoid;
+  }
+  h2 {
+    font-size: 22px !important;
+    margin-bottom: 10px !important;
+  }
+  section {
+    padding-top: 18px !important;
+    padding-bottom: 18px !important;
+    page-break-inside: auto;
+  }
+  /* Hero 首屏：打印第一页全部内容在纸面正中央 */
+  section[class*="min-h-screen"] {
+    min-height: 240mm !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding-top: 0 !important;
+  }
+
+  /* 每个大板块另起一页（证书跟随求学之路，不再独立分页） */
+  #skills, #projects, #presentation, #education,
+  #unique, #contact {
+    break-before: page;
+    page-break-before: always;
+  }
+
+  /* 压缩大分节间距，减少 PDF 整页留白 */
+  #unique > div,
+  #education > div {
+    gap: 26px !important;
+  }
+  /* 结尾联系方式紧凑呈现，避免出现近乎空白的孤页 */
+  footer {
+    margin-top: 8px !important;
+  }
+  footer > div {
+    padding: 16px 0 !important;
+  }
+  /* 打印时给联系方式附上具体网址（PDF 中链接不可点击，直接显示地址） */
+  footer a::after {
+    content: " (" attr(href) ")";
+    font-size: 9px;
+    color: #666666;
+    word-break: break-all;
+  }
+  /* 联系方式在打印时分四行：电话、邮箱、GitHub、领英各占一行 */
+  footer .contact-links {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 4px !important;
+  }
+
+  /* 卡片与图片不跨页断裂 */
+  .liquid-glass, .swiper-slide {
+    page-break-inside: avoid;
+  }
+  img {
+    max-width: 100% !important;
+  }
+
+  /* ---- PPT 轮播：打印时全部幻灯片缩小为 2 列并排，避免一图一页 ---- */
+  .presentation-swiper {
+    overflow: visible !important;
+    height: auto !important;
+  }
+  .presentation-swiper .swiper-wrapper {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 10px !important;
+    width: 100% !important;
+    transform: none !important;
+  }
+  .presentation-swiper .swiper-slide {
+    position: static !important;
+    width: 100% !important;
+    height: auto !important;
+    margin-bottom: 0 !important;
+    background: #ffffff !important;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+  .presentation-swiper .swiper-slide img {
+    object-fit: contain !important;
+  }
+  /* 隐藏 Swiper loop 模式复制的重复幻灯片 */
+  .presentation-swiper .swiper-slide-duplicate {
+    display: none !important;
+  }
+  /* 隐藏幻灯片上的渐变信息条、全屏按钮等绝对定位装饰 */
+  .presentation-swiper .swiper-slide .absolute {
+    display: none !important;
+  }
+  .swiper-custom-prev, .swiper-custom-next {
+    display: none !important;
+  }
+
+  /* ---- AI 实战作品：四窗格强制 2x2 放入一页 ---- */
+  #projects .grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 10px !important;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+  #projects .grid > div {
+    height: 150px !important;
+  }
+
+  /* ---- 独特之处：多列网格打印时降级单列，再按板块覆盖列数 ---- */
+  #unique .grid {
+    grid-template-columns: 1fr !important;
+    gap: 14px !important;
+  }
+  /* 电子创客 2 张并排；艺术能力 3 个并排；社会责任 2 个并排；图寻 2x2 四宫格 */
+  #unique .maker-grid,
+  #unique .volunteer-grid,
+  #unique .hobby-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 10px !important;
+  }
+  #unique .art-grid {
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 10px !important;
+  }
+  /* 独特之处各子板块各自成页：标题与内容整块放进一张纸
+     （第 1 个子板块与页面标题同页，其余从新页开始，避免产生空白页） */
+  #unique > div:nth-child(2) > div + div {
+    break-before: page;
+    page-break-before: always;
+  }
+  #unique > div:nth-child(2) > div {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  /* 荣誉认证：列表 2 列并排缩小，卡片内部图文纵向排列，避免一图一页 */
+  .print-cert-grid {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 12px !important;
+  }
+  #certificates .grid {
+    grid-template-columns: 1fr !important;
+    gap: 10px !important;
+  }
+
+  /* Hero 首屏标题放大一倍并居中；学校信息行放大显示 */
+  section[class*="min-h-screen"] h1 {
+    font-size: 88px !important;
+    line-height: 1.1 !important;
+  }
+  section[class*="min-h-screen"] p {
+    font-size: 18px !important;
+    line-height: 1.4 !important;
+  }
+  /* 座右铭三句同时显示（隐藏动态旋转区），字号为“高晟哲”打印字号的一半 */
+  .hero-rotating {
+    display: none !important;
+  }
+  .print-rotating-lines {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 4px !important;
+  }
+  section[class*="min-h-screen"] .print-rotating-line {
+    font-family: 'Instrument Serif', serif !important;
+    font-size: 44px !important;
+    line-height: 1.15 !important;
+    color: #1a1a1a !important;
+    -webkit-text-fill-color: #1a1a1a !important;
+    letter-spacing: -0.02em;
+  }
+
+  /* ---- 能力雷达图 SVG：深色文字与网格线 ---- */
+  .radar-svg text {
+    fill: #333333 !important;
+  }
+  .radar-svg line[stroke*="255,255,255"],
+  .radar-svg polygon[stroke*="255,255,255"] {
+    stroke: #d4d4d4 !important;
+  }
+  .radar-svg polygon[fill*="99, 102, 241"] {
+    fill: rgba(79, 70, 229, 0.12) !important;
+    stroke: #4338ca !important;
+  }
+
+  /* ---- 动态演示视频：打印时用最后一帧 / 首帧海报静态图替代 ---- */
+  .print-video-fallback.print-active {
+    display: block !important;
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+  }
+}
+
+/* 打印时替代视频的静态图容器，屏幕浏览时始终隐藏 */
+.print-video-fallback {
+  display: none;
+}
+
+/* 打印专用的座右铭三行文字，屏幕浏览时始终隐藏 */
+.print-rotating-lines {
+  display: none;
+}
+
+.liquid-glass {
+  background: rgba(255, 255, 255, 0.02);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  backdrop-filter: blur(16px) saturate(180%);
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.12), 0 20px 40px rgba(0, 0, 0, 0.5);
+  position: relative;
+}
+
+/* 顶部导航栏雾化玻璃：覆盖 liquid-glass 近透明背景，确保半透明模糊效果可见
+   暗色半透明底 + backdrop-filter，黑色背景下仍能清晰呈现磨砂质感 */
+.nav-glass {
+  background: rgba(17, 24, 39, 0.55);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  backdrop-filter: blur(16px) saturate(180%);
+}
+
+.liquid-glass::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1.2px;
+  background: linear-gradient(to bottom, rgba(255,255,255,0.3), rgba(255,255,255,0.0));
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+.glass-pill {
+  background: rgba(255, 255, 255, 0.05);
+  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px);
+  border-radius: 9999px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.darkCardSweep {
+  position: relative;
+  overflow: hidden;
+}
+
+.darkCardSweep::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(105deg, transparent 20%, rgba(255, 255, 255, 0.1) 50%, transparent 80%);
+  transform: translateX(-100%);
+  transition: transform 0.6s ease;
+  pointer-events: none;
+}
+
+.darkCardSweep:hover::after {
+  transform: translateX(100%);
+}
+
+/* ============================================
+   Swiper - Presentation Showcase
+   ============================================ */
+.presentation-swiper {
+  --swiper-pagination-color: rgba(255, 255, 255, 0.6);
+  --swiper-pagination-bullet-inactive-color: rgba(255, 255, 255, 0.2);
+  --swiper-pagination-bullet-size: 6px;
+  --swiper-pagination-bullet-horizontal-gap: 4px;
+}
+
+.presentation-swiper .swiper-slide {
+  background: rgba(0, 0, 0, 0.3);
+}
+
+/* 自动播放时隐藏自定义鼠标指针 */
+body.presentation-cursor-hidden .custom-cursor-dot,
+body.presentation-cursor-hidden .custom-cursor-ring {
+  display: none;
+}
+
+.swiper-custom-prev::after,
+.swiper-custom-next::after {
+  display: none;
+}
+
+.swiper-custom-prev,
+.swiper-custom-next {
+  transition: all 0.2s ease;
+}
+
+.swiper-custom-prev.swiper-button-disabled,
+.swiper-custom-next.swiper-button-disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+/* Fullscreen adjustments */
+.presentation-swiper:fullscreen .swiper-slide img {
+  object-fit: contain;
+}
